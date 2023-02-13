@@ -1,0 +1,29 @@
+/* 
+Photoresistor (Light Sensor) Example
+*/
+
+int lightValue;
+
+void setup(void) {
+
+  Serial.begin(9600);
+  pinMode(9, OUTPUT);
+  pinMode(A0, INPUT);
+  
+}
+ 
+void loop(void) {
+  
+  	lightValue = analogRead(A0);
+  	Serial.print("Light reading: ");
+   	Serial.println(lightValue);
+  
+  	if (lightValue < 925){
+    	digitalWrite (9, HIGH);
+  	}
+              
+  	else{ 
+    	digitalWrite (9, LOW);
+	}
+    
+}//end loop
