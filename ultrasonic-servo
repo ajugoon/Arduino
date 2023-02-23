@@ -1,0 +1,56 @@
+#include <Servo.h> 
+
+Servo myservo;
+int pos = 0;    // variable to store the servo position
+int trigPin = 9;
+int echoPin = 10;
+int servoPin = 11;
+long duration; 
+long distance; //variables to support ultrasonic calculations
+
+// This is a CUSTOM function that will be called only when a certain condition
+// has been met
+
+void moveServo(){
+  // goes from 0 degrees to 180 degrees in steps of 1 degree
+  // tell servo to go to position in variable 'pos'
+  // waits 15 ms for the servo to reach the position
+  for (pos = 0; pos <= 180; pos += 1) { 
+    	myservo.write(pos);              
+    	delay(15);                      
+  }  
+}
+
+// This is the SETUP function - all Arduino programs will have ONE Setup function
+void setup(){
+  
+  Serial.begin (9600); //allows data to be sent to serial monitor
+  myservo.attach(servoPin); // attaches servo to pin 11
+  pinMode(trigPin, OUTPUT); // attaches trigger to pin 9
+  pinMode(echoPin, INPUT); // attaches echo to pin 10
+  
+}
+
+
+// This is the LOOP function - all Arduino programs will have ONE Loop function
+void loop(){
+  
+  digitalWrite(trigPin, LOW);
+  delayMicroseconds(2);
+  digitalWrite(trigPin, HIGH);
+  delayMicroseconds(10);
+  digitalWrite(trigPin, LOW);
+  
+  duration = pulseIn(echoPin, HIGH);
+  distance = (duration/2) / 29.1; //pre-established formula we can use
+  Serial.print(distance);
+  Serial.println(" cm");
+  delay (500); // delay 500 milliseconds
+  
+  if (distance < 100) {
+    Serial.print("we are calling the move function");	
+    moveServo();
+  }//end if
+  
+}
+
