@@ -45,10 +45,10 @@ void loop(){
   distance = (duration/2) / 29.1; //pre-established formula we can use
   Serial.print(distance);
   Serial.println(" cm");
-  delay (500); // delay 500 milliseconds
+  delay (100); // delay 100 milliseconds
   
-  if (distance < 100) {
-    Serial.print("we are calling the move function");	
+  if (distance < 20) {
+    // Serial.print("we are calling the move function");	
     moveServo();
   }//end if
   
